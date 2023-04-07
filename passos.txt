@@ -1,0 +1,176 @@
+Django CRUD (Create Read Update Delete) Example
+https://www.javatpoint.com/django-crud-application
+
+
+configurando PowerShell no modo Administrador
+
+PS C:\Windows\system32> Get-ExecutionPolicy
+Restricted
+
+liberando ambiente virtual para powerShell no VSCode
+
+PS C:\Windows\system32> Set-ExecutionPolicy AllSigned -Force
+
+PS C:\Windows\system32> Set-ExecutionPolicy Unrestrict -Force
+PS C:\Windows\system32> Get-ExecutionPolicy
+Unrestricted
+---------------------------------------------------------------
+Abrindo terminal no VSCode p configuras ambiente virtual
+
+PS C:\Users\HP\Desktop\projetoWeb\crud_example> python -m venv venv
+
+ativando o ambiente virtual
+
+PS C:\Users\HP\Desktop\projetoWeb\crud_example> .\venv\Scripts\activate
+
+---------------------------------------------------------------
+INSTALAR DJANGO
+
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example> pip install django
+Collecting django
+  Using cached Django-4.1.7-py3-none-any.whl (8.1 MB)
+Collecting asgiref<4,>=3.5.2
+  Using cached asgiref-3.6.0-py3-none-any.whl (23 kB)
+Collecting sqlparse>=0.2.2
+  Using cached sqlparse-0.4.3-py3-none-any.whl (42 kB)
+Collecting tzdata
+  Using cached tzdata-2022.7-py2.py3-none-any.whl (340 kB)
+Installing collected packages: tzdata, sqlparse, asgiref, django
+Successfully installed asgiref-3.6.0 django-4.1.7 sqlparse-0.4.3 tzdata-2022.7
+
+[notice] A new release of pip available: 22.3.1 -> 23.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example>
+
+---------------------------------------------------------------
+1 - CRIANDO PROJETO RAIZ
+
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example> django-admin startproject root . 
+---------------------------------------------------------------
+2 - CRIANDO APP 
+
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example> py manage.py startapp employee 
+---------------------------------------------------------------
+3 - REGISTRANDO NA RAIZ(pasta root) EM SETTINGS.PY
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'employee',
+]
+---------------------------------------------------------------
+4 - Database Setup NA RAIZ(pasta root) EM SETTINGS.PY
+ Create a database djangodb in mysql, and configure into the
+ settings.py file of django project. See the example.
+
+DATABASES = {  
+    'default': {  
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': 'djangodb_01',  # criar no mysql ==> create database djangodb_01;
+        'USER':'root',  
+        'PASSWORD':'123456',  
+        'HOST':'localhost',  
+        'PORT':'3306'  
+    }  
+}  
+
+INSTALAR MYSQL
+
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example> pip install mysqlclient    
+Collecting mysqlclient
+  Downloading mysqlclient-2.1.1-cp311-cp311-win_amd64.whl (178 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 178.4/178.4 kB 5.4 MB/s eta 0:00:00
+Installing collected packages: mysqlclient
+Successfully installed mysqlclient-2.1.1
+
+[notice] A new release of pip available: 22.3.1 -> 23.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example> 
+
+---------------------------------------------------------------
+5-  NA PASTA APP(EMPLOYESS) ADICIONAR O MODELS.PY
+
+from django.db import models  
+class Employee(models.Model):  
+    eid = models.CharField(max_length=20)  
+    ename = models.CharField(max_length=100)  
+    eemail = models.EmailField()  
+    econtact = models.CharField(max_length=15)  
+    class Meta:  
+        db_table = "employee"  
+---------------------------------------------------------------
+6. Create a ModelForm
+
+// forms.py
+
+from django import forms  
+from employee.models import Employee  
+class EmployeeForm(forms.ModelForm):  
+    class Meta:  
+        model = Employee  
+        fields = "__all__"  
+---------------------------------------------------------------
+
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+Create Migrations
+
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example> py manage.py makemigrations
+No changes detected
+(venv) PS C:\Users\HP\Desktop\projetoWeb\crud_example> py manage.py migrate       
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, employee, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying employee.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+
+---------------------------------------------------------------
